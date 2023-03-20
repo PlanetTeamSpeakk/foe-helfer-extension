@@ -51,6 +51,7 @@ let _menu = {
 		'moppelHelper',
 		'fpCollector',
 		'gildFight',
+		'gbgcd',
 		'investment',
 		'alerts',
 		'guildMemberstat',
@@ -844,6 +845,30 @@ let _menu = {
 		});
 
 		return btn.append(btn_sp);
+	},
+
+	/**
+	 * GBG Camp Distributor
+	 *
+	 * @returns {*|jQuery}
+	 */
+	gbgcd_Btn: () => {
+		// If the player does not have the GBG Officer permission in their guild,
+		// remove this tool as it's of no use to them.
+		if ((ExtGuildPermission & GuildMemberStat.GuildPermission_GBGOfficer) !== GuildMemberStat.GuildPermission_GBGOfficer) {
+			delete _menu.Items[_menu.Items.indexOf("gbgcd")];
+			return;
+		}
+
+		let btn = _menu.MakeButton("gbgcd", "GBG Camp Distributor",
+			"<em id='gbgcd-Btn-closed' class='tooltip-error'>Disabled: Visit the GBG map first!<br/></em>" +
+			"Distribute camps across the map without wasting resources.", true);
+
+		let btn_sp = $('<span />').on('click', function () {
+			if (GBGCD.map) GBGCDWindow.show();
+		});
+
+		return btn.append(btn_sp, $('<span id="gbgcd-count" class="hud-counter" style="display: none">0</span>'));
 	},
 
 	/**

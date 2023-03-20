@@ -532,6 +532,10 @@ p {
 	background-image: url('../images/menu/gbg.png');
 }
 
+[id$=gbgcd-Btn] span {
+	background-image: url('../images/menu/gbgcd.png');
+}
+
 [id$=investment-Btn] span {
 	background-image: url('../images/menu/investhistory.png');
 }
