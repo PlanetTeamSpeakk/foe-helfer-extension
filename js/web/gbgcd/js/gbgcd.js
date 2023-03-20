@@ -621,7 +621,7 @@ class GBGCDWindow {
                         .on("click", () => GBGCD.redistribute(this.settings.campTarget)))
                     .append($(`<button class="btn btn-default btn-delete" title="Clear all known built camps">Clear built camps</button>`)
                         .on("click", () => GBGCD.redistribute(this.settings.campTarget)))))
-            .parent().css({width: "250px"});
+            .parent().css({width: "285px"});
         this.updateData();
     }
 
