@@ -624,8 +624,7 @@ class GBGCDWindow {
                             GBGCD.builtCamps = {};
                             GBGCD.redistribute();
                             GBGCDWindow.updateData();
-                        }))))
-            .parent().css({width: "285px"});
+                        }))));
         this.updateData();
     }
 
