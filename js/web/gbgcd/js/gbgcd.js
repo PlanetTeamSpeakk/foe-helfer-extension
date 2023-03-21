@@ -585,20 +585,20 @@ class GBGCDWindow {
         });
 
         $("#gbgcdBody")
-            .append($(`<small class="visit-first">For the best results, visit the buildings menu of each province first.</small>`))
-            .append($(`<h4 class="text-center">Camps to build:</h4>`))
+            .append($(`<small class="visit-first">${i18n("Boxes.GBGCD.VisitFirst")}</small>`))
+            .append($(`<h4 class="text-center">${i18n("Boxes.GBGCD.ToBuild")}</h4>`))
             .append($(`<table class="foe-table">
                            <thead>
                                <tr>
-                                   <th>Province</th>
-                                   <th>Camps</th>
-                                   <th>Province</th>
-                                   <th>Camps</th>
+                                   <th>${i18n("Boxes.GBGCD.Province")}</th>
+                                   <th>${i18n("Boxes.GBGCD.Camps")}</th>
+                                   <th>${i18n("Boxes.GBGCD.Province")}</th>
+                                   <th>${i18n("Boxes.GBGCD.Camps")}</th>
                                </tr>
                            </thead>
                            <tbody id="gbgcd__provinces">
                                <tr>
-                                   <td colspan="4"><strong class="no-provinces text-center">No provinces to show here</strong></td>
+                                   <td colspan="4"><strong class="no-provinces text-center">${i18n("Boxes.GBGCD.NoProvinces")}</strong></td>
                                </tr>
                            </tbody>
                        </table>`))
@@ -606,20 +606,20 @@ class GBGCDWindow {
                            <table style="width: 100%">
                                <tbody>
                                    <tr>
-                                       <td><span>Left to build: <strong id="left-to-build">0</strong></span></td>
-                                       <td class="text-right"><span>Total saved: <strong id="total-saved">0</strong></span></td>
+                                       <td><span>${i18n("Boxes.GBGCD.LeftToBuild")} <strong id="left-to-build">0</strong></span></td>
+                                       <td class="text-right"><span>${i18n("Boxes.GBGCD.TotalSaved")} <strong id="total-saved">0</strong></span></td>
                                    </tr>
                                    <tr>
-                                       <td><span>Overshot: <strong id="overshot">0</strong></span></td>
-                                       <td class="text-right"><span>Undershot: <strong id="undershot">0</strong></span></td>
+                                       <td><span>${i18n("Boxes.GBGCD.Overshot")} <strong id="overshot">0</strong></span></td>
+                                       <td class="text-right"><span>${i18n("Boxes.GBGCD.Undershot")} <strong id="undershot">0</strong></span></td>
                                    </tr>
                                </tbody>
                            </table>
                        </div>`)
                 .append($("<div class='mx-auto h-stack mt-2'>")
-                    .append($(`<button class="btn btn-default" title="Redistribute the camps across the board">Redistribute</button>`)
+                    .append($(`<button class="btn btn-default" title="${i18n("Boxes.GBGCD.RedistributeBtn.Tooltip")}">${i18n("Boxes.GBGCD.RedistributeBtn")}</button>`)
                         .on("click", () => GBGCD.redistribute(this.settings.campTarget)))
-                    .append($(`<button class="btn btn-default btn-delete" title="Clear all known built camps">Clear built camps</button>`)
+                    .append($(`<button class="btn btn-default btn-delete" title="${i18n("Boxes.GBGCD.ClearBuiltBtn.Tooltip")}">${i18n("Boxes.GBGCD.ClearBuiltBtn")}</button>`)
                         .on("click", () => {
                             GBGCD.builtCamps = {};
                             GBGCD.redistribute();
@@ -683,7 +683,8 @@ class GBGCDWindow {
                 let built = GBGCD.builtCamps[province.id];
                 campsColumn
                     .append(" ")
-                    .append($(`<span class="built" title="${built} camp${built === 1 ? "" : "s"} already built">(${built})</span>`));
+                    .append($(`<span class="built" title="${HTML.i18nReplacer(i18n(`Boxes.GBGCD.Camp${built === 1 ? "" : "s"}Built`),
+                        {built: built})}">(${built})</span>`));
             }
 
             row
@@ -761,8 +762,8 @@ class GBGCDWindow {
                     .prop("checked", this.settings.showBadge))
                 .append($(`
                   <label for="gbgcd__show-badge" 
-                    title="Whether to show the badge that displays the amount of camps saved in the menu.">
-                    Show badge
+                    title="${i18n("Boxes.GBGCD.Settings.ShowBadge.Tooltip")}">
+                    ${i18n("Boxes.GBGCD.Settings.ShowBadge")}
                   </label>
                 `)))
 
@@ -772,8 +773,8 @@ class GBGCDWindow {
                     .prop("checked", this.settings.autoOpen))
                 .append($(`
                   <label for="gbgcd__auto-open" 
-                    title="Whether to automatically open this tool when going to the buildings page of any province you own.">
-                    Auto-open
+                    title="${i18n("Boxes.GBGCD.Settings.AutoOpen.Tooltip")}">
+                    ${i18n("Boxes.GBGCD.Settings.AutoOpen")}
                   </label>
                 `)))
 
@@ -783,8 +784,8 @@ class GBGCDWindow {
                     .prop("checked", this.settings.showFilled))
                 .append($(`
                   <label for="gbgcd__show-filled" 
-                    title="Whether to show provinces that already have the desired amount of camps built.">
-                    Show filled
+                    title="${i18n("Boxes.GBGCD.Settings.ShowFilled.Tooltip")}">
+                    ${i18n("Boxes.GBGCD.Settings.ShowFilled")}
                   </label>
                 `)))
 
@@ -793,32 +794,32 @@ class GBGCDWindow {
                 .append($(`<input id="gbgcd__camp-target" type="number" name="Camp Target" min="1" max="5">`)
                     .prop("value", this.settings.campTarget))
                 .append($(`<label for="gbgcd__camp-target"
-                title="The amount of camps each opposing province should be supported by. 4 by default.">Camp target</label>`)))
+                title="${i18n("Boxes.GBGCD.Settings.CampTarget.Tooltip")}">${i18n("Boxes.GBGCD.Settings.CampTarget")}</label>`)))
 
             // Sort mode
             .append($("<p>")
                 .append($(`<div class="dropdown">`)
                     .append($(`<input type="checkbox" class="dropdown-checkbox" id="gbgcd__sort-toggle">`)) // Required to toggle the dropdown
-                    .append($(`<label class="dropdown-label game-cursor" for="gbgcd__sort-toggle">Sort</label>`))
+                    .append($(`<label class="dropdown-label game-cursor" for="gbgcd__sort-toggle">${i18n("Boxes.GBGCD.Settings.Sort")}</label>`))
                     .append($(`<span class="arrow"></span>`)) // Arrow to display dropdown status
                     .append($(`
                         <ul id="gbgcd__sort-dropdown">
                             <li>
                                 <label>
                                     <input type="radio" name="sort"/>
-                                    By Name
+                                    ${i18n("Boxes.GBGCD.Settings.Sort.ByName")}
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     <input type="radio" name="sort"/>
-                                    By Ring
+                                    ${i18n("Boxes.GBGCD.Settings.Sort.ByRing")}
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     <input type="radio" name="sort"/>
-                                    By Region
+                                    ${i18n("Boxes.GBGCD.Settings.Sort.ByRegion")}
                                 </label>
                             </li>
                         </ul>
