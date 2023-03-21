@@ -860,9 +860,9 @@ let _menu = {
 			return;
 		}
 
-		let btn = _menu.MakeButton("gbgcd", "GBG Camp Distributor",
-			"<em id='gbgcd-Btn-closed' class='tooltip-error'>Disabled: Visit the GBG map first!<br/></em>" +
-			"Distribute camps across the map without wasting resources.", true);
+		let btn = _menu.MakeButton("gbgcd", i18n("Menu.GBGCD.Title"),
+			`<em id='gbgcd-Btn-closed' class='tooltip-error'>${i18n("Menu.GBGCD.Warning")}<br/></em>${i18n("Menu.GBGCD.Desc")}`,
+			true);
 
 		let btn_sp = $('<span />').on('click', function () {
 			if (GBGCD.map) GBGCDWindow.show();
