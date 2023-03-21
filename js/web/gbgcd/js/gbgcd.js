@@ -704,7 +704,7 @@ class GBGCDWindow {
         if (!count) table
             .append($("<tr>")
                 .append($(`<td class="text-center" colspan="4">`)
-                    .append(`<span class="no-provinces">No provinces to show here</span>`)));
+                    .append(`<span class="no-provinces">${i18n("Boxes.GBGCD.NoProvinces")}</span>`)));
         else {
             if (count % 2 === 1)
                 // Add two empty cells
