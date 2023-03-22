@@ -28,13 +28,18 @@ class Province {
 }
 
 class GBGMap {
-    constructor() {
-        /**
-         * The provinces in this map.
-         * @type {{string: Province}}
-         */
-        this.provinces = {};
-    }
+    /**
+     * The provinces in this map.
+     * @type {{string: Province}}
+     */
+    provinces = {};
+
+    /**
+     * The id of this map.
+     * Can currently only be either 'waterfall_archipelago' or 'volcano_archipelago'.
+     * @type {string}
+     */
+    id;
 
     // Must be overridden by subclasses
     /**
@@ -49,6 +54,7 @@ class GBGMap {
 class VolcanoArchipelagoMap extends GBGMap {
     constructor() {
         super();
+        this.id = "volcano_archipelago";
 
         // First ring
         this.provinces["A1M"] = new Province(this, 0, "A1M");
@@ -56,8 +62,7 @@ class VolcanoArchipelagoMap extends GBGMap {
         this.provinces["C1N"] = new Province(this, 2, "C1N");
         this.provinces["D1B"] = new Province(this, 3, "D1B");
 
-        for (let i = 0; i < 4; i++)
-        {
+        for (let i = 0; i < 4; i++) {
             let quarterId = GBGCD.sumChar('A', i);
 
             // Second ring
@@ -179,12 +184,12 @@ class VolcanoArchipelagoMap extends GBGMap {
 class WaterfallArchipelagoMap extends GBGMap {
     constructor() {
         super()
+        this.id = "waterfall_archipelago";
 
         // First ring
         this.provinces["X1X"] = new Province(this, 0, "X1X");
 
-        for (let i = 0; i < 6; i++)
-        {
+        for (let i = 0; i < 6; i++) {
             let quarterId = GBGCD.sumChar('A', i);
 
             // Second ring
