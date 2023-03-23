@@ -344,9 +344,15 @@ const GBGCD = (function () {   // Detach from global scope
 
     // Built camps storage
     FoEproxy.addHandler("GuildBattlegroundBuildingService", "getBuildings", data => {
+        if (!GBGCD.map) return;
+
         let province = data.responseData.provinceId || 0;
         let pName = GBGCD.map.idToName(province);
         if (!GBGCD.map.provinces[pName].ours) return;
+
+        // Auto-open window if the user goes to the buildings tab.
+        if (!$("#gbgcd").length)
+            GBGCDWindow.show(true);
 
         let built = data.responseData.placedBuildings
             .filter(building => building.id === "siege_camp")
@@ -355,18 +361,12 @@ const GBGCD = (function () {   // Detach from global scope
         if (GBGCD.builtCamps[province] === built) return;
         GBGCD.builtCamps[province] = built;
 
-        if (!GBGCD.map) return;
-
         // Redistribute the camps if this tile already has more camps
         // than we bargained for.
         if (built > GBGCD.map.provinces[pName].desiredCount)
             GBGCD.redistribute();
 
         GBGCDWindow.updateData();
-
-        // Auto-open window if the user goes to the buildings tab.
-        if (!$("#gbgcd").length)
-            GBGCDWindow.show(true);
     });
 
     // Province ownership changes (province conquered/lost)
