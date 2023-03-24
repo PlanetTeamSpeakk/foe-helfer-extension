@@ -394,6 +394,7 @@ const GBGCD = (function () {   // Detach from global scope
         if (action !== "province_conquered" && action !== "province_lost") return;
 
         GBGCD.map.provinces[GBGCD.map.idToName(provinceId)].ours = action === "province_conquered";
+        if (id in GBGCD.builtCamps) delete GBGCD.builtCamps[provinceId];
 
         distributeCamps(GBGCD.map, GBGCDWindow.settings.campTarget);
         GBGCDWindow.updateData();
@@ -442,9 +443,14 @@ const GBGCD = (function () {   // Detach from global scope
             let id = province.id || 0; // First province is missing id key;
             let name = map.idToName(id);
 
+            let ours = province["ownerId"] === pid;
             let isSpawnSpot = "isSpawnSpot" in province && province.isSpawnSpot;
             map.provinces[name].init(isSpawnSpot ? 0 : // Spawn spots have no camps
-                province["totalBuildingSlots"] || 0, province["ownerId"] === pid, isSpawnSpot);
+                province["totalBuildingSlots"] || 0, ours, isSpawnSpot);
+
+            // If we have a cached value of the amount of camps this province had
+            // when it was still ours, delete that as it's not ours anymore.
+            if (!ours && id in GBGCD.builtCamps) delete GBGCD.builtCamps[id];
         }
 
         // Distribute camps if this is the first time the map is loaded.
