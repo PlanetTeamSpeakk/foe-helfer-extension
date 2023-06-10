@@ -1,6 +1,7 @@
 /*
- * **************************************************************************************
- * Copyright (C) 2022 FoE-Helper team - All Rights Reserved
+ * *************************************************************************************
+ *
+ * Copyright (C) 2023 FoE-Helper team - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the AGPL license.
  *
@@ -8,7 +9,7 @@
  * https://github.com/mainIine/foe-helfer-extension/blob/master/LICENSE.md
  * for full license details.
  *
- * **************************************************************************************
+ * *************************************************************************************
  */
 
 let srcLinks = {
@@ -26,7 +27,7 @@ let srcLinks = {
             return document.querySelector('script[src*="' + name + '"]');
         };
 
-        script = await isElementLoaded('ForgeHX')
+        const script = await isElementLoaded('ForgeHX')
         
         let xhr = new XMLHttpRequest();
         xhr.open("GET", script.src)
@@ -52,8 +53,8 @@ let srcLinks = {
         }
     },
 
-    get: (filename, full=false, noerror=false) => {
-        let CS = ""
+    get: (filename, full = false, noerror = false) => {
+        let CS = undefined;
         let CSfilename = filename.substring(0,filename.length-4);
         
         if (!srcLinks.FileList) {
@@ -82,10 +83,9 @@ let srcLinks = {
 
     getReward:(icon) => {
         let url1 = srcLinks.get(`/shared/icons/reward_icons/reward_icon_${icon}.png`,true, true);
-
         let url2 = srcLinks.get(`/shared/icons/goods_large/${icon}.png`,true, true);
-
-        if (url1.length > url2.length + 13) {
+        
+        if (url2.indexOf("undefined") > -1) {
             return url1;
         }
 
